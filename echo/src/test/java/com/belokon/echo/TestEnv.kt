@@ -11,21 +11,11 @@ object TestEnv {
     val activityMock = Mockito.mock(EchoActivity::class.java).apply {
         Mockito.`when`(this.uuid).then { testUid }
     }
+
     val onNextLogDelegate: Observer<PermissionStatus> = object : Observer<PermissionStatus> {
-        override fun onComplete() {
-
-        }
-
-        override fun onSubscribe(d: Disposable) {
-
-        }
-
-        override fun onNext(t: PermissionStatus) {
-            println("value -> $t")
-        }
-
-        override fun onError(e: Throwable) {
-
-        }
+        override fun onComplete() {}
+        override fun onSubscribe(d: Disposable) {}
+        override fun onNext(t: PermissionStatus) { println("value -> $t") }
+        override fun onError(e: Throwable) {}
     }
 }

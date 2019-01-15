@@ -9,31 +9,35 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricTestRunner
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+@RunWith(RobolectricTestRunner::class)
 class CoreTests {
     private val resultBus = PublishSubject.create<ActivityResult>()
     private val permissionBus = PublishSubject.create<PermissionResult>()
-    private val testUid = TestEnv.testUid
-    private val activityMock: Activity = TestEnv.activityMock
-    private val activityProvider = ActivityProvider().apply {
-        bind(activityMock)
-    }
+
 
 
     @Test
     fun test() {
+        val activityProvider = ActivityProvider()
         val echo = Echo(resultBus = resultBus, permissionBus = permissionBus, activityProvider = activityProvider)
+
+        val activity = Robolectric.setupActivity(EchoActivity::class.java)
+        activityProvider.bind(activity)
+        val uuid = activity.uuid
+
+
         val permissionDispatcher = echo.permissionDispatcher
         val testObserver = TestObserver.create<PermissionStatus>(TestEnv.onNextLogDelegate)
-
-        permissionDispatcher.requestPermissions(testUid, 1, arrayOf()).subscribe(testObserver)
-
+        permissionDispatcher.requestPermissions(uuid, 1, arrayOf()).subscribe(testObserver)
         testObserver.await(1000, TimeUnit.MILLISECONDS)
         testObserver.assertComplete()
     }
