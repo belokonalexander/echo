@@ -44,11 +44,10 @@ class DiContainer(private val applicationContext: Context) {
     }
 
     fun getAppScope() = create(APP_KEY, Kodein {
-        bind() from multiton { uuid: UUID -> Presenter(Echo.getActivityResultDispatcher(), Echo.getPermissionDispatcher(), uuid) }
-        bind() from singleton { ActivityResultDispatcher(instance(), instance()) }
-        // bind() from scoped(ActivityScope).singleton {  }
-        bind() from singleton { ActivityProvider() }
-        bind() from provider { UniqueActivityDelegate() }
+        bind() from singleton { Echo() }
+        bind() from singleton { instance<Echo>().activityResultDispatcher }
+        bind() from singleton { instance<Echo>().permissionDispatcher }
+        bind() from multiton { uuid: UUID -> Presenter(instance(), instance(), uuid) }
     })
 
     fun getActivityScope(activity: Activity) = create(ACTIVITY_KEY, Kodein {

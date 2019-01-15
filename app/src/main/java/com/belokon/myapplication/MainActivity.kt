@@ -29,9 +29,12 @@ class MainActivity : EchoActivity(), KodeinAware {
 
     private lateinit var presenter: Presenter
 
+    override val echo: Echo
+        get() = kodein.direct.instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = Presenter(Echo.getActivityResultDispatcher(), Echo.getPermissionDispatcher(), uuid)
+        presenter = kodein.direct.instance(arg = uuid)
         val contentView = LayoutInflater.from(this).inflate(R.layout.activity_main, null)
         setContentView(contentView)
 

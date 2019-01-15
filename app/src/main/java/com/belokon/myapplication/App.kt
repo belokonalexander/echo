@@ -15,11 +15,10 @@ class App : Application(), KodeinAware {
     override val kodein: Kodein
         get() = di.getAppScope()
 
-    private val activityProvider: ActivityProvider by instance()
+    private val echo: Echo by kodein.instance()
 
     override fun onCreate() {
         super.onCreate()
-        registerActivityLifecycleCallbacks(DispatcherActivityCallback(activityProvider))
-        Echo.initialize(this)
+        echo.bindToApplication(this)
     }
 }
