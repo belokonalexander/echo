@@ -11,7 +11,6 @@ abstract class EchoActivity : AppCompatActivity(), UniqueActivity {
     override val uuid: UUID
         get() = uniqueActivityDelegate.uuid
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         // ActivityLifecycleCallbacks.onCreate вызывается в super.onCreate, поэтому мы должны задать uuid до аттача активити к провайдеру
         uniqueActivityDelegate.onCreate(savedInstanceState)
@@ -25,13 +24,13 @@ abstract class EchoActivity : AppCompatActivity(), UniqueActivity {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        echo.dispatchActivityResult(uuid, requestCode, resultCode, data)
+        provideEcho().dispatchActivityResult(uuid, requestCode, resultCode, data)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        echo.dispatchPermission(uuid, requestCode, grantResults)
+        provideEcho().dispatchPermission(uuid, requestCode, permissions, grantResults)
     }
 
-    abstract val echo: Echo
+    abstract fun provideEcho(): Echo
 }

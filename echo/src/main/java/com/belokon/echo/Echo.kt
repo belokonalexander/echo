@@ -24,10 +24,10 @@ class Echo(
         application.registerActivityLifecycleCallbacks(DispatcherActivityCallback(activityProvider))
     }
 
-    fun dispatchPermission(uuid: UUID, requestCode: Int, grantResults: IntArray) {
+    fun dispatchPermission(uuid: UUID, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         permissionBus.let { bus ->
             if (grantResults.isNotEmpty()) {
-                val status = when (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                val status = when (permissions.size == grantResults.size && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                     true -> PermissionStatus.ALLOWED
                     else -> PermissionStatus.DISABLED
                 }

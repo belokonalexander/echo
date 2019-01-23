@@ -29,8 +29,9 @@ class MainActivity : EchoActivity(), KodeinAware {
 
     private lateinit var presenter: Presenter
 
-    override val echo: Echo
-        get() = kodein.direct.instance()
+    override fun provideEcho(): Echo {
+        return kodein.direct.instance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
