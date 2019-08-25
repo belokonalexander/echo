@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#c7c7c7">
+    android:orientation="vertical">
 
-<!--    <com.belokon.myapplication.ProgressView
-        android:layout_gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="60dp"/>-->
+    <Button
+        android:id="@+id/cameraPermissionButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Request camera permission"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/activityResultButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Go activity for result"/>
+
+</LinearLayout>

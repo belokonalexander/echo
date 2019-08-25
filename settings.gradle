@@ -1,1 +1,1 @@
-include ':app', ':echo'
+include ':app', ':echo-lib'
