@@ -16,7 +16,7 @@ abstract class EchoActivity : AppCompatActivity(), UniqueActivity {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         uniqueActivityDelegate.onSaveInstanceState(outState)
     }
